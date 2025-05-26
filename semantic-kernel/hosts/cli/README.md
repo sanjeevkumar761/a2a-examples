@@ -12,11 +12,7 @@ The client will use streaming if the server supports it.
 
 ## Running the CLI
 
-1. Navigate to the CLI sample directory:
-    ```bash
-    cd samples/python/hosts/cli
-    ```
-2. Run the example client
+1. Run the example client
     ```
     uv run . --agent [url-of-your-a2a-server]
     ```

@@ -47,20 +47,14 @@ sequenceDiagram
 
 ## Setup & Running
 
-1. **Navigate to the samples directory**:
-
-```bash
-cd samples/python/agents/semantickernel
-```
-
-2. **Create an environment file (.env) with your API key and the model ID (e.g., "gpt-4.1"):**:
+1. **Create an environment file (.env) with your API key and the model ID (e.g., "gpt-4.1"):**:
 
 ```bash
 OPENAI_API_KEY="your_api_key_here"
 OPENAI_CHAT_MODEL_ID="your-model-id"
 ```
 
-3. **Set up the Python Environment**:
+2. **Set up the Python Environment**:
 
 > Note: pin the Python version to your desired version (3.10+)
 
@@ -69,7 +63,7 @@ uv python pin 3.12
 uv venv
 source .venv/bin/activate
 ```
-4. **Run the agent**:
+3. **Run the agent**:
 
 Choose one of the following options:
 
