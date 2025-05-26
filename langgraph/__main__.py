@@ -14,7 +14,7 @@ from a2a.types import (
 )
 from agent import CurrencyAgent
 from agent_executor import CurrencyAgentExecutor
-from agents.langgraph.agent import CurrencyAgent
+#from agents.langgraph.agent import CurrencyAgent
 from dotenv import load_dotenv
 
 
@@ -36,9 +36,9 @@ class MissingAPIKeyError(Exception):
 def main(host, port):
     """Starts the Currency Agent server."""
     try:
-        if not os.getenv('GOOGLE_API_KEY'):
+        if not os.getenv('OPENAI_API_KEY'):
             raise MissingAPIKeyError(
-                'GOOGLE_API_KEY environment variable not set.'
+                'OPENAI_API_KEY environment variable not set.'
             )
 
         capabilities = AgentCapabilities(streaming=True, pushNotifications=True)
@@ -76,6 +76,7 @@ def main(host, port):
         logger.error(f'Error: {e}')
         exit(1)
     except Exception as e:
+        print("Got error while starting the server")
         logger.error(f'An error occurred during server startup: {e}')
         exit(1)
 

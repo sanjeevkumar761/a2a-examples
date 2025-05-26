@@ -4,7 +4,7 @@ This sample demonstrates a currency conversion agent built with [LangGraph](http
 
 ## How It Works
 
-This agent uses LangGraph with Google Gemini to provide currency exchange information through a ReAct agent pattern. The A2A protocol enables standardized interaction with the agent, allowing clients to send requests and receive real-time updates.
+This agent uses LangGraph with OpenAI to provide currency exchange information through a ReAct agent pattern. The A2A protocol enables standardized interaction with the agent, allowing clients to send requests and receive real-time updates.
 
 ```mermaid
 sequenceDiagram
@@ -56,16 +56,12 @@ sequenceDiagram
 
 ## Setup & Running
 
-1. Navigate to the samples directory:
+
+1. Create an environment file (.env) with your API key:
 
    ```bash
-   cd samples/python/agents/langgraph
-   ```
-
-2. Create an environment file with your API key:
-
-   ```bash
-   echo "GOOGLE_API_KEY=your_api_key_here" > .env
+   OPENAI_API_KEY="your_api_key_here"
+   OPENAI_CHAT_MODEL_ID="your-model-id"
    ```
 
 3. Run the agent:
@@ -81,7 +77,7 @@ sequenceDiagram
 4. In a separate terminal, run an A2A [client](/samples/python/hosts/README.md):
 
    ```bash
-   cd samples/python/hosts/cli
+   cd ./hosts/cli
    uv run .
    ```
 
@@ -319,4 +315,4 @@ data: {"jsonrpc":"2.0","id":12,"result":{"id":"131","status":{"state":"completed
 - [A2A Protocol Documentation](https://google.github.io/A2A/#/documentation)
 - [LangGraph Documentation](https://langchain-ai.github.io/langgraph/)
 - [Frankfurter API](https://www.frankfurter.app/docs/)
-- [Google Gemini API](https://ai.google.dev/gemini-api)
+
