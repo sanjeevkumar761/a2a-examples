@@ -21,4 +21,4 @@ The client will use streaming if the server supports it.
     uv run . --agent [url-of-your-a2a-server]
     ```
 
-   for example `--agent http://localhost:10000`. More command line options are documented in the source code. 
+   for example `--agent http://localhost:10020`. More command line options are documented in the source code. 
