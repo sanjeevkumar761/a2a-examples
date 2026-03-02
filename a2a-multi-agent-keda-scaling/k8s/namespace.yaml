@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: a2a-agents
+  labels:
+    app.kubernetes.io/name: a2a-multi-agent-demo
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: default
+  namespace: a2a-agents
+  annotations:
+    azure.workload.identity/client-id: "0241e5c1-83d6-4f23-9c86-97e61b5d038a"
+  labels:
+    azure.workload.identity/use: "true"

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: agent-config
+  namespace: a2a-agents
+data:
+  INVOICE_AGENT_URL: "http://invoice-agent-svc:8001"
+  PO_AGENT_URL: "http://po-agent-svc:8002"
+  ORCHESTRATOR_URL: "http://orchestrator-svc:8000"
+  REDIS_URL: "redis://redis-svc:6379"
+  # Azure Service Bus — set USE_SERVICEBUS to "true" for KEDA scaling demo
+  USE_SERVICEBUS: "true"
+  SERVICEBUS_FQDN: "sb-a2a-demo.servicebus.windows.net"

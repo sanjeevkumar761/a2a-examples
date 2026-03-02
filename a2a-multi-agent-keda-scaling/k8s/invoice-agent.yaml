@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: invoice-agent
+  namespace: a2a-agents
+  labels:
+    app: invoice-agent
+    agent-type: worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: invoice-agent
+  template:
+    metadata:
+      labels:
+        app: invoice-agent
+        agent-type: worker
+        azure.workload.identity/use: "true"
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8001"
+    spec:
+      serviceAccountName: default
+      containers:
+      - name: invoice-agent
+        image: acra2ademo584.azurecr.io/a2a-invoice-agent:latest
+        ports:
+        - containerPort: 8001
+        env:
+        - name: PORT
+          value: "8001"
+        - name: AGENT_URL
+          value: "http://invoice-agent-svc:8001"
+        - name: REDIS_URL
+          valueFrom:
+            configMapKeyRef:
+              name: agent-config
+              key: REDIS_URL
+        - name: USE_SERVICEBUS
+          valueFrom:
+            configMapKeyRef:
+              name: agent-config
+              key: USE_SERVICEBUS
+        - name: SERVICEBUS_FQDN
+          valueFrom:
+            configMapKeyRef:
+              name: agent-config
+              key: SERVICEBUS_FQDN
+        envFrom:
+        - secretRef:
+            name: azure-openai-secret
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /.well-known/agent.json
+            port: 8001
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /.well-known/agent.json
+            port: 8001
+          initialDelaySeconds: 5
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: invoice-agent-svc
+  namespace: a2a-agents
+spec:
+  selector:
+    app: invoice-agent
+  ports:
+  - port: 8001
+    targetPort: 8001
+  type: ClusterIP

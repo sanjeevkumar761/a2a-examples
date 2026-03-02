@@ -1,0 +1,11 @@
+# KEDA TriggerAuthentication for Azure Service Bus
+# Uses Azure Workload Identity via the KEDA operator's service account.
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: azure-servicebus-auth
+  namespace: a2a-agents
+spec:
+  podIdentity:
+    provider: azure-workload
+    identityId: "0241e5c1-83d6-4f23-9c86-97e61b5d038a"

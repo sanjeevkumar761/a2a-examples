@@ -1,0 +1,26 @@
+# KEDA ScaledObject for Invoice Validation Agent
+# Scales 0→10 pods based on Azure Service Bus queue depth.
+# When invoice-requests queue has messages, KEDA spins up agent pods to process them.
+# When the queue drains, pods scale back to 0 after the cooldown period.
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: invoice-agent-scaler
+  namespace: a2a-agents
+  labels:
+    app: invoice-agent
+spec:
+  scaleTargetRef:
+    name: invoice-agent          # matches the Deployment name in invoice-agent.yaml
+  minReplicaCount: 0              # scale to zero when idle — key KEDA feature
+  maxReplicaCount: 10             # burst up to 10 pods under load
+  cooldownPeriod: 300             # wait 5 min before scaling down
+  pollingInterval: 15             # check queue every 15 seconds
+  triggers:
+  - type: azure-servicebus
+    metadata:
+      queueName: invoice-requests
+      namespace: sb-a2a-demo
+      messageCount: "5"
+    authenticationRef:
+      name: azure-servicebus-auth
